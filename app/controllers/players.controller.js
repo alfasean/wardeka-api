@@ -1,19 +1,16 @@
 const db = require("../models");
 const Players = db.players
 
-const uuid = require('uuid');
 
 exports.create = (req, res) => {
-    const { name, email, rank, country } = req.body;
+    const { name, email, rank, country} = req.body;
 
     if (!name || !email || !rank || !country) {
         return res.status(400).send({ message: "Data tidak lengkap" });
     }
 
-    const user_id = uuid.v4();
 
     Players.create({
-        user_id: user_id,
         name: name,
         email: email,
         rank: rank,
@@ -42,9 +39,8 @@ exports.show = (req, res) => {
 
 exports.update = (req, res) => {
     const id = req.params.id;
-    const updateData = req.body; 
   
-    Players.findByIdAndUpdate(id, updateData, { useFindAndModify: false, new: true })
+    Players.findByIdAndUpdate(id, { $set: { tutorial: true } }, { new: true })
       .then((data) => {
         if (!data) {
           return res.status(404).send({ message: "Tidak dapat mengupdate data" });
@@ -55,7 +51,6 @@ exports.update = (req, res) => {
   };
   
   
-
 exports.delete = (req, res) => {
     const id = req.params.id;
 
@@ -68,5 +63,4 @@ exports.delete = (req, res) => {
         })
 
         .catch(error => res.status(500).send({message: error.message}))
-
 }

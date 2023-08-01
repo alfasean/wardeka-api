@@ -2,11 +2,14 @@ module.exports = mongoose => {
 
     const schema = mongoose.Schema(
         {
-            user_id : String,
             name: String,
             email: String,
             rank: String,
             country: String,
+            tutorial: {
+                type: Boolean,
+                default: false,
+            },
         }, {
             timestamps: true
         }
